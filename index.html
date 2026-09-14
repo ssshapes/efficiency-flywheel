@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Efficiency Flywheel</title>
+<meta name="description" content="Making a thing more efficient makes it cheaper, cheaper means more of it gets used, and the same turn that grows the market drains the margin out of the middle. One cost curve, two sides, with the three assumptions it rests on and where each one fails.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Efficiency Flywheel">
+<meta property="og:description" content="One cost curve, two sides: Jevons on the demand side, the hardware paradox on the supply side, and the three gates that decide whether the wheel turns.">
+<meta property="og:url" content="https://ssshapes.github.io/efficiency-flywheel/">
+<meta property="og:image" content="https://ssshapes.github.io/efficiency-flywheel/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  @font-face { font-family: "Basic Commercial"; src: url("fonts/basic-commercial-light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Basic Commercial"; src: url("fonts/basic-commercial-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Basic Commercial"; src: url("fonts/basic-commercial-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Basic Commercial"; src: url("fonts/basic-commercial-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+  :root {
+    --ink: #0a0a0a;
+    --surface: #ffffff;
+    --accent: #bd4b2a;
+    --dim: #5f5f5f;
+    --hair: #e6e6e6;
+    --rule: #0a0a0a;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f0efed;
+      --surface: #0e0e0e;
+      --accent: #d9683f;
+      --dim: #9b9893;
+      --hair: #2a2926;
+      --rule: #f0efed;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f0efed;
+    --surface: #0e0e0e;
+    --accent: #d9683f;
+    --dim: #9b9893;
+    --hair: #2a2926;
+    --rule: #f0efed;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: "Basic Commercial", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    padding-block: 40px 72px;
+    padding-inline: 20px;
+  }
+  main { max-width: 960px; margin: 0 auto; display: grid; gap: 36px; }
+  main > * { min-width: 0; }
+  .tbl-wrap { overflow-x: auto; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+    margin: 0 0 10px;
+  }
+  h1 { font-size: 34px; line-height: 1.1; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; text-wrap: balance; }
+  .stand { font-size: 19px; font-weight: 300; max-width: 62ch; margin: 0; color: var(--ink); }
+  header { border-bottom: 2px solid var(--rule); padding-bottom: 24px; }
+  figure { margin: 0; }
+  .fig-wrap { overflow-x: auto; }
+  svg { display: block; width: 100%; max-width: 100%; height: auto; color: var(--ink); font-family: inherit; }
+  figcaption { font-size: 14px; color: var(--dim); max-width: 70ch; margin-top: 12px; }
+  figcaption b { color: var(--ink); font-weight: 700; }
+  figcaption p { margin: 0 0 8px; }
+  figcaption ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+  section { border-top: 1px solid var(--hair); padding-top: 24px; }
+  section h2 { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 0 0 14px; }
+  .cond { display: grid; grid-template-columns: 1fr; gap: 14px 32px; max-width: 78ch; }
+  @media (min-width: 720px) { .cond { grid-template-columns: 1fr 1fr 1fr; } .cond.four { grid-template-columns: 1fr 1fr; } }
+  .cond div { border-left: 2px solid var(--accent); padding-left: 12px; }
+  .cond h3 { font-size: 15px; margin: 0 0 4px; font-weight: 700; }
+  .cond p { margin: 0; font-size: 14px; color: var(--dim); }
+  table { border-collapse: collapse; font-variant-numeric: tabular-nums; max-width: 72ch; width: 100%; }
+  th, td { text-align: left; padding: 9px 0; border-bottom: 1px solid var(--hair); font-size: 15px; vertical-align: top; }
+  th { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
+  td.num { font-size: 22px; font-weight: 700; white-space: nowrap; width: 9ch; padding-right: 12px; }
+  td small { color: var(--dim); font-size: 13px; }
+  table.cases { max-width: none; }
+  table.cases td { font-size: 14px; padding: 12px 14px 12px 0; }
+  table.cases td:first-child { width: 12em; }
+  table.cases td:first-child b { color: var(--accent); }
+  .note { font-size: 13px; color: var(--dim); max-width: 78ch; margin: 12px 0 0; }
+  .cases { display: grid; grid-template-columns: 1fr; gap: 26px; }
+  .cases > div { border-top: 1px solid var(--hair); padding-top: 14px; }
+  .cases > div:first-child { border-top: 0; padding-top: 0; }
+  .cases h3 { font-size: 16px; font-weight: 700; margin: 0 0 10px; color: var(--accent); }
+  .cases h3 small { font-size: 13px; font-weight: 400; color: var(--dim); margin-left: 8px; }
+  .cases .cols { display: grid; grid-template-columns: 1fr; gap: 10px 40px; }
+  @media (min-width: 720px) { .cases .cols { grid-template-columns: 1fr 1fr; } }
+  .cases .lab { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 0 0 6px; }
+  .cases ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 5px; max-width: 46ch; }
+  .read p { max-width: 70ch; margin: 0 0 10px; font-size: 15px; }
+  footer { border-top: 1px solid var(--hair); padding-top: 14px; font-size: 12px; color: var(--dim); }
+  .sources ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--dim); display: grid; gap: 5px; max-width: 80ch; }
+  .sources a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--hair); }
+  .sources a:hover, .sources a:focus { border-bottom-color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .accent { color: var(--accent); }
+</style>
+
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Thomas Simon &middot; September 2026</p>
+    <h1>The Efficiency Flywheel</h1>
+    <p class="stand">Making a thing more efficient makes it cheaper. Cheaper means more of it gets used, which drives the cost down again. The same turn that grows the market drains the margin out of whoever sits in the middle.</p>
+  </header>
+
+  <figure>
+    <div class="fig-wrap">
+    <svg viewBox="0 0 1100 690" role="img" aria-label="A reinforcing loop: cumulative volume lowers unit cost by Wright's law, price follows cost, and if demand is elastic quantity demanded rises more than price fell, adding volume. A gate on the loop stalls it when demand is inelastic. A side chain from volume shows parts standardizing, suppliers multiplying and competing, and margin draining from the middle to the ends.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+        <marker id="ah-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+        <marker id="ah-loop" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+
+      <!-- LOOP NODES -->
+      <g font-size="13" font-weight="700" fill="currentColor">
+        <rect x="325" y="63" width="190" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="420" y="95" text-anchor="middle">Cumulative volume</text>
+
+        <rect x="565" y="183" width="190" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="660" y="215" text-anchor="middle">Unit cost falls</text>
+
+        <rect x="565" y="403" width="190" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="660" y="435" text-anchor="middle">Price falls</text>
+
+        <rect x="85" y="403" width="190" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="180" y="430" text-anchor="middle">Quantity demanded</text>
+        <text x="180" y="446" text-anchor="middle">rises</text>
+      </g>
+
+      <!-- GATE (the condition) -->
+      <g>
+        <polygon points="420,520 510,560 420,600 330,560" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="420" y="556" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">Is demand</text>
+        <text x="420" y="571" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">elastic?</text>
+      </g>
+
+      <!-- LOOP ARROWS -->
+      <path d="M420,117 Q420,210 565,210" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah-accent)"/>
+      <g fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)">
+        <path d="M660,237 L660,403"/>
+        <path d="M660,457 Q660,560 510,560"/>
+        <path d="M180,403 Q180,90 325,90"/>
+      </g>
+      <path d="M330,560 Q180,560 180,457" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah-accent)"/>
+      <path d="M420,600 L420,632" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ah)"/>
+
+      <!-- LOOP ARROW LABELS -->
+      <g font-size="12" fill="currentColor">
+        <text x="412" y="152" text-anchor="end" font-weight="700" fill="var(--accent)">Wright's law</text>
+        <text x="412" y="168" text-anchor="end" fill="var(--dim)">unit cost falls ~20%</text>
+        <text x="412" y="184" text-anchor="end" fill="var(--dim)">per doubling of volume</text>
+
+        <text x="675" y="312" font-weight="700">price follows cost</text>
+        <text x="675" y="328" fill="var(--dim)">unless a held gate</text>
+        <text x="675" y="344" fill="var(--dim)">keeps the gap as margin</text>
+
+        <text x="690" y="500" font-weight="700">efficiency reaches</text>
+        <text x="690" y="516" fill="var(--dim)">the buyer</text>
+
+        <text x="245" y="600" text-anchor="middle" font-weight="700" fill="var(--accent)">yes, elastic</text>
+        <text x="245" y="616" text-anchor="middle" fill="var(--dim)">quantity rises more than price fell</text>
+
+        <text x="30" y="238" font-weight="700">Jevons</text>
+        <text x="30" y="254" fill="var(--dim)">more units built</text>
+
+        <text x="420" y="656" text-anchor="middle" font-weight="700">no, inelastic</text>
+        <text x="420" y="672" text-anchor="middle" fill="var(--dim)">the saving sticks; rebound below 100%; the loop stalls</text>
+      </g>
+
+      <!-- REINFORCING MARK -->
+      <g>
+        <path d="M434,308 A24,24 0 1 1 404,309.5" fill="none" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+        <text x="420" y="335" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">R</text>
+        <text x="420" y="378" text-anchor="middle" font-size="11" letter-spacing="0.12em" fill="var(--dim)">REINFORCING LOOP</text>
+      </g>
+
+      <!-- SUPPLY-SIDE CHAIN -->
+      <g font-size="13" font-weight="700" fill="currentColor">
+        <rect x="830" y="123" width="200" height="54" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="930" y="155" text-anchor="middle" fill="var(--accent)">Parts standardize</text>
+
+        <rect x="830" y="273" width="200" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="930" y="298" text-anchor="middle">Suppliers multiply</text>
+        <text x="930" y="314" text-anchor="middle">and compete</text>
+
+        <rect x="830" y="423" width="200" height="54" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="930" y="448" text-anchor="middle">Margin drains</text>
+        <text x="930" y="464" text-anchor="middle">from the middle</text>
+      </g>
+      <path d="M515,90 Q930,90 930,123" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah-accent)"/>
+      <g fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)">
+        <path d="M930,177 L930,273"/>
+        <path d="M930,327 L930,423"/>
+        <path d="M930,477 L930,505"/>
+      </g>
+      <g font-size="12" fill="currentColor">
+        <text x="720" y="72" text-anchor="middle" fill="var(--accent)" font-weight="700">volume concentrates on the same parts</text>
+        <text x="945" y="221" font-weight="700">Stigler</text>
+        <text x="945" y="237" fill="var(--dim)">the market is big enough</text>
+        <text x="945" y="253" fill="var(--dim)">to specialize</text>
+        <text x="945" y="371" font-weight="700">one spec, many makers</text>
+        <text x="945" y="387" fill="var(--dim)">Baldwin and Clark</text>
+        <text x="930" y="527" text-anchor="middle" font-weight="700">margin pools at the ends</text>
+        <text x="930" y="543" text-anchor="middle" fill="var(--dim)">design, integration, brand (the smile curve)</text>
+        <text x="930" y="559" text-anchor="middle" fill="var(--dim)">and in what the curve can't touch (Baumol)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>
+      <p><b>Red marks the three assumptions the loop rests on:</b> a real learning curve, elastic demand, and a standard part.</p>
+      <ul>
+        <li><b>The loop only closes through the gate.</b> Volume drives unit cost down by Wright's law, and price follows.</li>
+        <li><b>Elastic demand turns the wheel.</b> The cheaper price pulls in more than proportional demand, which adds volume and drives cost down again.</li>
+        <li><b>Inelastic demand stops it.</b> The saving is kept and the wheel stalls: rebound without backfire.</li>
+        <li><b>The chain on the right runs off the same volume.</b> Standardized parts, many competing makers, and the margin leaving the middle for the ends.</li>
+        <li><b>Cheaper parts feed back into unit cost.</b> That is why the two sides are one curve.</li>
+      </ul>
+    </figcaption>
+  </figure>
+
+  <section>
+    <h2>The three conditions</h2>
+    <div class="cond">
+      <div>
+        <h3>A learning curve that is real</h3>
+        <p>Cost has to fall with cumulative volume, not just with time. Airframes, chips, solar modules, radios: yes. A string quartet: no.</p>
+      </div>
+      <div>
+        <h3>Elastic demand</h3>
+        <p>A price cut has to bring a more than proportional rise in quantity demanded. There has to be a darker room, a longer drive, a bigger model to run.</p>
+      </div>
+      <div>
+        <h3>A standard part</h3>
+        <p>For the supply side to commoditize, volume has to concentrate on one interchangeable component with a fixed interface, so that many makers can build it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where each assumption holds, and where it fails</h2>
+    <div class="cases">
+      <div>
+        <h3>A real learning curve <small>cost falls with cumulative volume</small></h3>
+        <div class="cols"><div><p class="lab">Where it holds</p>
+        <ul>
+          <li>Solar modules, about 20% cheaper per doubling</li>
+          <li>Lithium batteries, close to that</li>
+          <li>Memory chips</li>
+          <li>Airframes, where Wright measured it</li>
+          <li>The ESP32 radio at a dollar</li>
+        </ul></div>
+        <div><p class="lab fail">Where it fails</p>
+        <ul>
+          <li>Nuclear plants: French and US costs <i>rose</i> with each build, the documented case of negative learning</li>
+          <li>Live performance and care work, where an hour is an hour</li>
+          <li>Site-built construction: every building a prototype, productivity flat for decades</li>
+        </ul></div></div>
+      </div>
+      <div>
+        <h3>Elastic demand <small>a price cut brings more than proportional use</small></h3>
+        <div class="cols"><div><p class="lab">Where it holds</p>
+        <ul>
+          <li>Light for two centuries: spending flat, lumens up a hundred-thousand-fold</li>
+          <li>Computation: every hardware gain spent</li>
+          <li>Road capacity: driving fills it</li>
+          <li>Radios cheap enough to put in a lightbulb</li>
+        </ul></div>
+        <div><p class="lab fail">Where it fails</p>
+        <ul>
+          <li>Refrigerators: energy per unit fell about three-quarters since the 1970s, and nobody bought ten</li>
+          <li>Home insulation and car fuel economy: rebound of 10 to 30%, most of the saving kept</li>
+          <li>Cheaper is not enough; there has to be a darker room</li>
+        </ul></div></div>
+      </div>
+      <div>
+        <h3>A standard part <small>one interchangeable spec many makers can build</small></h3>
+        <div class="cols"><div><p class="lab">Where it holds</p>
+        <ul>
+          <li>Open-source hardware, where price falls fastest: the gate left open on purpose</li>
+          <li>The shipping container</li>
+          <li>USB</li>
+          <li>The ESP32</li>
+          <li>Generic drugs: the day a patent expires the same molecule may be made by anyone, and the price falls 80 to 90%</li>
+        </ul></div>
+        <div><p class="lab fail">Where it fails</p>
+        <ul>
+          <li>Patented drugs: one maker by law</li>
+          <li>Certified aerospace parts: traceability limits who may build them</li>
+          <li>Wedgwood's Etruria: no potter knew the whole process, so the learning could not leave</li>
+          <li>Fixtures built to a specification: nothing interchangeable, so the middle keeps its margin. Machinery versus Furniture in the industry return tables</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <p class="note">The last failure case is the one that matters for a specification-driven manufacturer: the same curve that drains margin from a commodity part leaves it with whoever owns the specification. Sources for the cases are listed on the wiki page and are being link-checked.</p>
+  </section>
+
+  <section>
+    <h2>Where the moat sits</h2>
+    <div class="cond four">
+      <div>
+        <h3>The gate a firm can hold</h3>
+        <p>Of the three assumptions, the standard part is the one a maker controls. Open-source hardware is that gate left open on purpose, which is why price falls fastest there and why the originators get cloned.</p>
+      </div>
+      <div>
+        <h3>Five ways to hold it</h3>
+        <p>Law (a patent). Regulation (certification). Organization (secrecy by splitting the process). Interface (a proprietary socket). Ecosystem (the customer relationship).</p>
+      </div>
+      <div>
+        <h3>Wedgwood, 1770</h3>
+        <p>Split the work so no potter knew the whole process: learning sped up at each step and could not walk out the door. Then cut prices from his cost books and opened the mass market. Held the gate, passed the saving on.</p>
+      </div>
+      <div>
+        <h3>Tesla, 2014</h3>
+        <p>Gave away its patents to pry open supply and demand at once: more makers, more volume, a faster curve it rode too. Then opened its charging connector and it became the standard. Opened the gate, kept the margin on the socket.</p>
+      </div>
+    </div>
+    <p class="note">The gate is not the moat. It is what makes the next decision yours: whether the cost decline goes to price, to grow volume, or stays as the gap between cost and price. Held and kept is the patented drug. Held and passed is Wedgwood. Open and passed is open-source hardware, where the middle earns nothing. Open and kept is Tesla, Arduino, Red Hat: give away the module, own the socket.</p>
+  </section>
+
+  <section>
+    <h2>Worked instance: light, 1800 to today</h2>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Number</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0.7%</td><td>of GDP spent on light, roughly constant for two centuries <small>(Tsao and colleagues, 2010)</small></td></tr>
+        <tr><td class="num">100,000&times;</td><td>more light consumed over the same period, as the cost of a lumen collapsed <small>(Nordhaus, 1996)</small></td></tr>
+        <tr><td class="num">~20%</td><td>cost decline per doubling of cumulative production, the experience curve <small>(Wright, 1936; Henderson, 1968)</small></td></tr>
+        <tr><td class="num">10 to 30%</td><td>rebound for most household efficiency gains; full backfire is rare. Light is the exception <small>(Sorrell, 2007; Gillingham and others, 2016)</small></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="read">
+    <h2>Reading the loop</h2>
+    <p>The <span class="accent">R</span> marks a reinforcing loop, the systems-dynamics term for what a business calls a flywheel: each turn makes the next turn easier. Jevons's paradox is the name for what this loop does to a resource when the gate is open. The gate is the whole argument: efficiency saves less than it promises, and in the cases where demand is truly elastic it saves nothing, because the saving is spent on more of the thing.</p>
+    <p>The right-hand chain is what the same volume does to the people who make the parts. It is Apple's supply chain becoming Shenzhen's, and it is why a small hardware designer's advantage is recognizing a cost curve someone else paid for and moving the commodity to a place where it is not one.</p>
+  </section>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ul>
+      <li>W. S. Jevons, <i>The Coal Question</i>, 1865 &middot; <a href="https://archive.org/details/coalquestionani00jevogoog">archive.org</a></li>
+      <li>A. Marshall, <i>Principles of Economics</i>, Book III ch. IV, 1890 (elasticity of demand) &middot; <a href="https://www.marxists.org/reference/subject/economics/marshall/bk3ch04.htm">text</a></li>
+      <li>T. P. Wright, "Factors Affecting the Cost of Airplanes," <i>J. Aeronautical Sciences</i>, 1936 &middot; <a href="https://arc.aiaa.org/doi/10.2514/8.155">AIAA</a></li>
+      <li>B. Henderson / BCG, "The Experience Curve," 1968 &middot; <a href="https://web-assets.bcg.com/img-src/Experience_Curve_1968_tcm9-140279.pdf">PDF</a></li>
+      <li>W. Nordhaus, "The History of Lighting Suggests Not," in <i>The Economics of New Goods</i>, 1996 &middot; <a href="https://www.nber.org/books-and-chapters/economics-new-goods/do-real-output-and-real-wage-measures-capture-reality-history-lighting-suggests-not">NBER</a></li>
+      <li>Tsao, Saunders, Creighton, Coltrin &amp; Simmons, "Solid-state lighting: an energy-economics perspective," <i>J. Phys. D</i>, 2010 &middot; <a href="https://iopscience.iop.org/article/10.1088/0022-3727/43/35/354001">IOP</a></li>
+      <li>S. Sorrell, <i>The Rebound Effect</i>, UK Energy Research Centre, 2007 &middot; <a href="https://ukerc.ac.uk/publications/the-rebound-effect-an-assessment-of-the-evidence-for-economy-wide-energy-savings-from-improved-energy-efficiency/">UKERC</a></li>
+      <li>Gillingham, Rapson &amp; Wagner, "The Rebound Effect and Energy Efficiency Policy," <i>REEP</i>, 2016 &middot; <a href="https://academic.oup.com/reep/article-abstract/10/1/68/2583834">journal</a></li>
+      <li>Duranton &amp; Turner, "The Fundamental Law of Road Congestion," <i>AER</i>, 2011 &middot; <a href="https://www.aeaweb.org/articles?id=10.1257/aer.101.6.2616">AEA</a></li>
+      <li>G. Stigler, "The Division of Labor is Limited by the Extent of the Market," <i>JPE</i>, 1951 &middot; <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/257075">Chicago</a></li>
+      <li>N. Rosenberg, "Technological Change in the Machine Tool Industry, 1840–1910," <i>J. Econ. Hist.</i>, 1963 &middot; <a href="https://www.cambridge.org/core/journals/journal-of-economic-history/article/abs/technological-change-in-the-machine-tool-industry-18401910/BC2D1F693FDAB12D327897FF86F6B4FF">Cambridge</a></li>
+      <li>Baldwin &amp; Clark, <i>Design Rules, Vol. 1: The Power of Modularity</i>, MIT Press, 2000 &middot; <a href="https://direct.mit.edu/books/monograph/1856/Design-Rules-Volume-1The-Power-of-Modularity">MIT Press</a></li>
+      <li>Christensen &amp; Raynor, <i>The Innovator's Solution</i>, ch. 6, 2003 &middot; <a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=15473">HBS</a></li>
+      <li>J. Spolsky, "Strategy Letter V," 2002 &middot; <a href="https://www.joelonsoftware.com/2002/06/12/strategy-letter-v/">joelonsoftware</a></li>
+      <li>S. Shih, <i>Me-Too Is Not My Style</i>, 1996 (the smile curve) &middot; <a href="https://en.wikipedia.org/wiki/Smiling_curve">Wikipedia</a></li>
+      <li>C. Anderson, "Epiphanies," <i>Foreign Policy</i>, 2013 ("the peace dividend of the smartphone wars") &middot; <a href="https://foreignpolicy.com/2013/04/29/epiphanies-from-chris-anderson/">FP</a></li>
+      <li>A. Huang, "The $12 Gongkai Phone," 2013 &middot; <a href="https://www.bunniestudios.com/blog/2013/the-12-gongkai-phone/">bunniestudios</a></li>
+      <li>Baumol &amp; Bowen, <i>Performing Arts: The Economic Dilemma</i>, 1966; Baumol, "Macroeconomics of Unbalanced Growth," <i>AER</i>, 1967 &middot; <a href="https://piketty.pse.ens.fr/files/Baumol1967.pdf">PDF</a></li>
+      <li>P. McGee, <i>Apple in China: The Capture of the World's Greatest Company</i>, Scribner, 2025 &middot; <a href="https://www.foreignaffairs.com/reviews/apple-china-capture-worlds-greatest-company">review</a></li>
+      <li>Cases in the holds-and-fails section (nuclear negative learning, refrigerators, generics, Wedgwood, Tesla) draw on Grubler 2010, US DOE, FDA, McKendrick 1961 and 1970, and Tesla's 2014 and 2022 announcements.</li>
+    </ul>
+  </section>
+
+  <footer>Thomas Simon, September 2026. Set in Basic Commercial.</footer>
+</main>
+
+</body>
+</html>
