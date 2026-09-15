@@ -90,6 +90,9 @@
   table.cases td:first-child { width: 12em; }
   table.cases td:first-child b { color: var(--accent); }
   .note { font-size: 13px; color: var(--dim); max-width: 78ch; margin: 12px 0 0; }
+  .note p { margin: 0; }
+  .note ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+  .cond ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--dim); display: grid; gap: 2px; }
   .cases { display: grid; grid-template-columns: 1fr; gap: 26px; }
   .cases > div { border-top: 1px solid var(--hair); padding-top: 14px; }
   .cases > div:first-child { border-top: 0; padding-top: 0; }
@@ -255,7 +258,14 @@
         <p>For the supply side to commoditize, volume has to concentrate on one interchangeable component with a fixed interface, so that many makers can build it.</p>
       </div>
     </div>
-    <p class="note">Each assumption sits on one arrow of the loop. The learning curve decides whether more volume lowers cost. The standard part decides whether lower cost becomes a lower price, or stays with whoever controls the part as margin. Elastic demand decides whether a lower price brings back more volume.</p>
+    <div class="note">
+      <p>Each assumption sits on one arrow of the loop:</p>
+      <ul>
+        <li>The learning curve decides whether more volume lowers cost.</li>
+        <li>The standard part decides whether lower cost becomes a lower price, or stays as margin with whoever controls the part.</li>
+        <li>Elastic demand decides whether a lower price brings back more volume.</li>
+      </ul>
+    </div>
   </section>
 
   <section>
@@ -325,7 +335,13 @@
       </div>
       <div>
         <h3>Five ways to hold it</h3>
-        <p>Law (a patent). Regulation (certification). Organization (secrecy by splitting the process). Interface (a proprietary socket). Ecosystem (the customer relationship).</p>
+        <ul>
+          <li>Law: a patent</li>
+          <li>Regulation: certification</li>
+          <li>Organization: secrecy by splitting the process</li>
+          <li>Interface: a proprietary socket</li>
+          <li>Ecosystem: the customer relationship</li>
+        </ul>
       </div>
       <div>
         <h3>Wedgwood, 1770</h3>
@@ -336,8 +352,15 @@
         <p>Gave away its patents to pry open supply and demand at once: more makers, more volume, a faster curve it rode too. Then opened its charging connector and it became the standard. Opened the part, kept the margin on the socket.</p>
       </div>
     </div>
-    <p class="note">Control of the part is not the moat by itself. It is what makes the next decision yours: whether the cost decline goes to price, to grow volume, or stays as the gap between cost and price. Held and kept is the patented drug. Held and passed is Wedgwood. Open and passed is open-source hardware, where the middle earns nothing. Open and kept is Tesla, Arduino, Red Hat: give away the module, own the socket.</p>
-  </section>
+    <div class="note">
+      <p>Control of the part is not the moat by itself. It is what makes the next decision yours: whether the cost decline goes to price, to grow volume, or stays as the gap between cost and price.</p>
+      <ul>
+        <li>Held and kept: the patented drug.</li>
+        <li>Held and passed: Wedgwood.</li>
+        <li>Open and passed: open-source hardware, where the middle earns nothing.</li>
+        <li>Open and kept: Tesla, Arduino, Red Hat. Give away the module, own the socket.</li>
+      </ul>
+    </div>  </section>
 
   <section>
     <h2>An example: light, 1800 to today</h2>
