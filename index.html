@@ -7,7 +7,7 @@
 <meta name="description" content="Making a thing more efficient makes it cheaper, cheaper means more of it gets used, and the same turn that grows the market drains the margin out of the middle. One cost curve, two sides, with the three assumptions it rests on and where each one fails.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The Efficiency Flywheel">
-<meta property="og:description" content="One cost curve, two sides: Jevons on the demand side, the hardware paradox on the supply side, and the three gates that decide whether the wheel turns.">
+<meta property="og:description" content="One cost curve, two sides: Jevons on the demand side, the hardware paradox on the supply side, and the three assumptions that decide whether the wheel turns.">
 <meta property="og:url" content="https://ssshapes.github.io/efficiency-flywheel/">
 <meta property="og:image" content="https://ssshapes.github.io/efficiency-flywheel/og.png">
 <meta property="og:image:width" content="1200">
@@ -119,7 +119,7 @@
 
   <figure>
     <div class="fig-wrap">
-    <svg viewBox="0 0 1100 690" role="img" aria-label="A reinforcing loop: cumulative volume lowers unit cost by Wright's law, price follows cost, and if demand is elastic quantity demanded rises more than price fell, adding volume. A gate on the loop stalls it when demand is inelastic. A side chain from volume shows parts standardizing, suppliers multiplying and competing, and margin draining from the middle to the ends.">
+    <svg viewBox="0 0 1100 690" role="img" aria-label="A reinforcing loop: cumulative volume lowers unit cost by Wright's law, price follows cost, and if demand is elastic quantity demanded rises more than price fell, adding volume. An elasticity check on the loop stalls it when demand is inelastic. A side chain from volume shows parts standardizing, suppliers multiplying and competing, and margin draining from the middle to the ends.">
       <defs>
         <marker id="ah" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -148,7 +148,7 @@
         <text x="180" y="446" text-anchor="middle">rises</text>
       </g>
 
-      <!-- GATE (the condition) -->
+      <!-- ELASTICITY CHECK -->
       <g>
         <polygon points="420,520 510,560 420,600 330,560" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
         <text x="420" y="556" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">Is demand</text>
@@ -172,7 +172,7 @@
         <text x="412" y="184" text-anchor="end" fill="var(--dim)">per doubling of volume</text>
 
         <text x="675" y="312" font-weight="700">price follows cost</text>
-        <text x="675" y="328" fill="var(--dim)">unless a held gate</text>
+        <text x="675" y="328" fill="var(--dim)">unless a held part</text>
         <text x="675" y="344" fill="var(--dim)">keeps the gap as margin</text>
 
         <text x="690" y="500" font-weight="700">efficiency reaches</text>
@@ -230,7 +230,7 @@
     <figcaption>
       <p><b>Red marks the three assumptions the loop rests on:</b> a real learning curve, elastic demand, and a standard part.</p>
       <ul>
-        <li><b>The loop only closes through the gate.</b> Volume drives unit cost down by Wright's law, and price follows.</li>
+        <li><b>The loop only closes through the elasticity check,</b> the red diamond at the bottom. Volume drives unit cost down by Wright's law, and price follows.</li>
         <li><b>Elastic demand turns the wheel.</b> The cheaper price pulls in more than proportional demand, which adds volume and drives cost down again.</li>
         <li><b>Inelastic demand stops it.</b> The saving is kept and the wheel stalls: rebound without backfire.</li>
         <li><b>The chain on the right runs off the same volume.</b> Standardized parts, many competing makers, and the margin leaving the middle for the ends.</li>
@@ -255,6 +255,7 @@
         <p>For the supply side to commoditize, volume has to concentrate on one interchangeable component with a fixed interface, so that many makers can build it.</p>
       </div>
     </div>
+    <p class="note">Each assumption sits on one arrow of the loop. The learning curve decides whether more volume lowers cost. The standard part decides whether lower cost becomes a lower price, or stays with whoever controls the part as margin. Elastic demand decides whether a lower price brings back more volume.</p>
   </section>
 
   <section>
@@ -297,7 +298,7 @@
         <h3>A standard part</h3>
         <div class="cols"><div><p class="lab">Many makers can build it</p>
         <ul>
-          <li>Open-source hardware, where price falls fastest: the gate left open on purpose</li>
+          <li>Open-source hardware, where price falls fastest: the design given away on purpose</li>
           <li>The shipping container</li>
           <li>USB</li>
           <li>The ESP32</li>
@@ -316,11 +317,11 @@
   </section>
 
   <section>
-    <h2>Where the moat sits</h2>
+    <h2>Where the moat sits: the standard part</h2>
     <div class="cond four">
       <div>
-        <h3>The gate a firm can hold</h3>
-        <p>Of the three assumptions, the standard part is the one a maker controls. Open-source hardware is that gate left open on purpose, which is why price falls fastest there and why the originators get cloned.</p>
+        <h3>The assumption a firm controls</h3>
+        <p>Of the three assumptions, the standard part is the one a maker controls. It sits on the arrow from cost to price. Open-source hardware gives that control away on purpose, which is why price falls fastest there and why the originators get cloned.</p>
       </div>
       <div>
         <h3>Five ways to hold it</h3>
@@ -328,14 +329,14 @@
       </div>
       <div>
         <h3>Wedgwood, 1770</h3>
-        <p>Split the work so no potter knew the whole process: learning sped up at each step and could not walk out the door. Then cut prices from his cost books and opened the mass market. Held the gate, passed the saving on.</p>
+        <p>Split the work so no potter knew the whole process: learning sped up at each step and could not walk out the door. Then cut prices from his cost books and opened the mass market. Held the part, passed the saving on.</p>
       </div>
       <div>
         <h3>Tesla, 2014</h3>
-        <p>Gave away its patents to pry open supply and demand at once: more makers, more volume, a faster curve it rode too. Then opened its charging connector and it became the standard. Opened the gate, kept the margin on the socket.</p>
+        <p>Gave away its patents to pry open supply and demand at once: more makers, more volume, a faster curve it rode too. Then opened its charging connector and it became the standard. Opened the part, kept the margin on the socket.</p>
       </div>
     </div>
-    <p class="note">The gate is not the moat. It is what makes the next decision yours: whether the cost decline goes to price, to grow volume, or stays as the gap between cost and price. Held and kept is the patented drug. Held and passed is Wedgwood. Open and passed is open-source hardware, where the middle earns nothing. Open and kept is Tesla, Arduino, Red Hat: give away the module, own the socket.</p>
+    <p class="note">Control of the part is not the moat by itself. It is what makes the next decision yours: whether the cost decline goes to price, to grow volume, or stays as the gap between cost and price. Held and kept is the patented drug. Held and passed is Wedgwood. Open and passed is open-source hardware, where the middle earns nothing. Open and kept is Tesla, Arduino, Red Hat: give away the module, own the socket.</p>
   </section>
 
   <section>
@@ -355,7 +356,7 @@
 
   <section class="read">
     <h2>Reading the loop</h2>
-    <p>The <span class="accent">R</span> marks a reinforcing loop, the systems-dynamics term for what a business calls a flywheel: each turn makes the next turn easier. Jevons's paradox is the name for what this loop does to a resource when the gate is open. The gate is the whole argument: efficiency saves less than it promises, and in the cases where demand is truly elastic it saves nothing, because the saving is spent on more of the thing.</p>
+    <p>The <span class="accent">R</span> marks a reinforcing loop, the systems-dynamics term for what a business calls a flywheel: each turn makes the next turn easier. Jevons's paradox is the name for what this loop does to a resource when demand is elastic. The elasticity check is the whole argument: efficiency saves less than it promises, and in the cases where demand is truly elastic it saves nothing, because the saving is spent on more of the thing.</p>
     <p>The right-hand chain is what the same volume does to the people who make the parts. It is Apple's supply chain becoming Shenzhen's, and it is why a small hardware designer's advantage is recognizing a cost curve someone else paid for and moving the commodity to a place where it is not one.</p>
   </section>
 
